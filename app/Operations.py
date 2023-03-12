@@ -1,53 +1,46 @@
 # Operações bancárias PyBank
 
-saldo = 0
-extrato = ""
-limite = 500
-total_saque = 0
-LIMITE_SAQUE = 3
 
-def depositar():
 
-    global saldo, extrato
+def depositar(saldo,valor,extrato, /):
 
     print('Depósito\n')
-    valor = float(input('Informe o valor desejado para depósito: '))
-    if valor < 0:
-        print(f'Favor informe um valor acima de 0')
-    else:
+    
+    if valor > 0:
         saldo += valor
-        print(f'O novo saldo é R$ {saldo:.2f}')
-        # adiciona a informação do depósito na variável extrato
         extrato += str(f'Depósito R$ {valor:.2f}\n') 
+        print(f'Depósito realizado com sucesso! O novo saldo é de {saldo:.2f}')
+    else:
+        print("== Falha na Operação! Valor informado inválido. ==")
+    
+    return saldo, extrato
 
-def sacar():
+def sacar(*, saldo, valor, extrato, limite, total_saque, limite_saque):
 
-    global saldo , total_saque, extrato
+    excedeu_saldo = valor > saldo
+    excedeu_limite = valor > limite
+    excedeu_saques = total_saque >= limite_saque
 
-    print("Saque\n")
-    valor = float(input('Informe o valor desejado para o saque: '))
-
-    if valor > saldo:
-        print("Saldo insuficiente!")
-    elif( total_saque < LIMITE_SAQUE):
-        if(valor < 0):
-            print("Operação falhou! Valor informado inválido.")
-        elif (valor <= limite):
+    if excedeu_saldo:
+        print(" == Falha na operação! Vocë não possui saldo suficiente. ==")
+    elif excedeu_limite:
+        print(" == Falha na operação! O valor do saque excede o limite. ==")
+    elif excedeu_saques:
+        print(" == Falha na operação! Número total de saques excedido. ==")
+    elif valor > 0:
             saldo -= valor
             print(f"Saque no valor de R$ {valor:.2f} realizado com sucesso!")
             total_saque+= 1
             extrato += str(f'Saque R$ {valor:.2f}\n')
-        else:
-            print(f"Operação falhou! Limite do saque até {limite:.2f}")
     else:
-        print("Quantidade total de saques diários atingido!")
+         print(" == Falha na operação! Valor informado inválido. ==")
 
-def realizar_extrato():
+    return saldo, extrato
+
+def realizar_extrato(saldo, /, *, extrato):
     
     print("\n============= Extrato ============\n")
     # 
     print("Não foi realizada movimentações." if not extrato else extrato)
     print(f'Saldo : R$ {saldo:.2f}')
     print("==================================")
-
-        
