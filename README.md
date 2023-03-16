@@ -72,3 +72,5 @@ Essa operação finaliza o sistema e encerra o  mesmo.
 ## Tecnologia
 
 Todo o projeto foi utilizado somente o Python, contudo diferente do proposto no desafio, adicionei funções e módulos para poder praticar sobre esses conceitos . 
+
+O projeto foi revisado para implementar mais funções e uma nova branch foi criada para essas alterações.

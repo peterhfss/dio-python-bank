@@ -10,6 +10,9 @@ def menu():
     [d] Depositar
     [s] Sacar
     [e] Extrato
+    [nu] Novo Usuário
+    [nc] Nova Conta
+    [lc] Listar Contas
     [q] Sair do Sistema
 
 
@@ -20,11 +23,15 @@ def main():
 
     # Constantes
     LIMITE_SAQUE = 3
+    AGENCIA = "0001"
 
+    # Dados 
     saldo = 0
     extrato = ""
     limite = 500
     total_saque = 0
+    usuarios = []
+    contas = []
 
     while True:
 
@@ -48,6 +55,19 @@ def main():
             )
         elif opcao == "e":
             realizar_extrato(saldo, extrato=extrato)
+
+        elif opcao == "nu":
+            novo_usuario(usuarios)
+
+        elif opcao == "nc":
+            numero_conta = len(contas) + 1
+            conta = criar_conta(AGENCIA , numero_conta, usuarios)
+
+            if conta:
+                contas.append(conta)
+
+        elif opcao == "lc":
+            listar_contas(contas)
 
         elif opcao == "q":
             print("Encerrando sessão no PyBank...")
